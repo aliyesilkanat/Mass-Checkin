@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity {
 		if (token.equals(""))
 			ensureUi();
 		else {
-			Intent in = new Intent(this, CheckIn.class);
+			Intent in = new Intent(this, com.foursquare.android.sample.CheckIn.class);
 			ACCESS_TOKEN=token;
 			startActivity(in);
 			this.finish();

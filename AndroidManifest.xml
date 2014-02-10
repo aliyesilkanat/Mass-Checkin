@@ -39,11 +39,7 @@
         <activity
             android:name="com.foursquare.android.nativeoauth.TokenExchangeActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity
-            android:name="com.foursquare.android.sample.Test1Activity"
-            android:label="@string/title_activity_test1" >
-        </activity>
-
+   
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

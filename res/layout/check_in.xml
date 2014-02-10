@@ -13,14 +13,23 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
+	
 
     <ListView
         android:id="@+id/lvVenues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/map"
-        android:layout_below="@+id/map" >
+        android:layout_below="@+id/map"
+        android:cacheColorHint="#00000000"
+        android:choiceMode="multipleChoice"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@android:color/darker_gray" >
 
+<!--         android:scrollingCache="false" -->
+<!--         android:drawSelectorOnTop="false" -->
+      
+      
     </ListView>
 
 </RelativeLayout>
