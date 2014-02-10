@@ -226,10 +226,10 @@ containing a value of this type.
     public static final class id {
         public static final int action_settings=0x7f05000a;
         public static final int btnLogin=0x7f050006;
-        public static final int frame=0x7f050007;
+        public static final int frame=0x7f050009;
         public static final int hybrid=0x7f050004;
-        public static final int lvVenues=0x7f050009;
-        public static final int map=0x7f050008;
+        public static final int lvVenues=0x7f050008;
+        public static final int map=0x7f050007;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
@@ -241,11 +241,12 @@ containing a value of this type.
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int loading=0x7f030001;
-        public static final int test1=0x7f030002;
+        public static final int check_in=0x7f030001;
+        public static final int loading=0x7f030002;
     }
     public static final class menu {
-        public static final int test1=0x7f090000;
+        public static final int check_in=0x7f090000;
+        public static final int test1=0x7f090001;
     }
     public static final class string {
         public static final int action_settings=0x7f060020;
@@ -349,6 +350,7 @@ containing a value of this type.
         public static final int hello_world=0x7f060021;
         public static final int loading=0x7f06001a;
         public static final int menu_settings=0x7f06001c;
+        public static final int title_activity_check_in=0x7f060022;
         public static final int title_activity_test1=0x7f06001f;
     }
     public static final class styleable {

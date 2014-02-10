@@ -7,25 +7,26 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
-<!-- <permission  -->
-<!--     android:name="com.foursquare.android.sample.MAPS_RECEIVE" -->
-<!--     android:protectionLevel="signature" -->
-<!--     ></permission> -->
-<!-- <uses-permission android:name="com.foursquare.android.sample.MAPS_RECEIVE"/> -->
+    <!-- <permission -->
+    <!-- android:name="com.foursquare.android.sample.MAPS_RECEIVE" -->
+    <!-- android:protectionLevel="signature" -->
+    <!-- ></permission> -->
+    <!-- <uses-permission android:name="com.foursquare.android.sample.MAPS_RECEIVE"/> -->
     <uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-<!-- The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended. -->
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+     The following two permissions are not required to use
+     Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-
-
         <activity
             android:name="com.foursquare.android.sample.MainActivity"
             android:label="@string/app_name" >
@@ -42,11 +43,18 @@
             android:name="com.foursquare.android.sample.Test1Activity"
             android:label="@string/title_activity_test1" >
         </activity>
-        <meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
-<meta-data
-    android:name="com.google.android.maps.v2.API_KEY"
-    android:value="AIzaSyAub01mkn7mf1LanE0nmH6NJttUa7iIIuQ"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAub01mkn7mf1LanE0nmH6NJttUa7iIIuQ" />
+
+        <activity
+            android:name="com.foursquare.android.sample.CheckIn"
+            android:label="@string/title_activity_check_in" >
+        </activity>
     </application>
 
 </manifest>

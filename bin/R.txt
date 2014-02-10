@@ -63,10 +63,10 @@ int drawable ic_plusone_standard_off_client 0x7f02001e
 int drawable ic_plusone_tall_off_client 0x7f02001f
 int id action_settings 0x7f05000a
 int id btnLogin 0x7f050006
-int id frame 0x7f050007
+int id frame 0x7f050009
 int id hybrid 0x7f050004
-int id lvVenues 0x7f050009
-int id map 0x7f050008
+int id lvVenues 0x7f050008
+int id map 0x7f050007
 int id none 0x7f050000
 int id normal 0x7f050001
 int id satellite 0x7f050002
@@ -74,9 +74,10 @@ int id terrain 0x7f050003
 int id tvMessage 0x7f050005
 int integer google_play_services_version 0x7f070000
 int layout activity_main 0x7f030000
-int layout loading 0x7f030001
-int layout test1 0x7f030002
-int menu test1 0x7f090000
+int layout check_in 0x7f030001
+int layout loading 0x7f030002
+int menu check_in 0x7f090000
+int menu test1 0x7f090001
 int string action_settings 0x7f060020
 int string app_name 0x7f06001b
 int string app_not_installed_message 0x7f06001e
@@ -110,6 +111,7 @@ int string connected_to_foursquare 0x7f06001d
 int string hello_world 0x7f060021
 int string loading 0x7f06001a
 int string menu_settings 0x7f06001c
+int string title_activity_check_in 0x7f060022
 int string title_activity_test1 0x7f06001f
 int[] styleable AdsAttrs { 0x7f010000, 0x7f010001, 0x7f010002 }
 int styleable AdsAttrs_adSize 0
