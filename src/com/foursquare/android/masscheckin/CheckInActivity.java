@@ -6,18 +6,25 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
+import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,12 +37,22 @@ public class CheckInActivity extends FragmentActivity {
 	private SharedPreferences.Editor prefsEditor;
 	public ProgressBar prog;
 	public View row;
-	
+
+	private DrawerLayout navDrawerLayout;
+	private ListView navDrawerList;
+	private ActionBarDrawerToggle navDrawerToggle;
+
+	private String[] navMenuTitles;
+	private ArrayList<NavDrawerItem> navDrawerItems;
+	private NavDrawerListAdapter adapter;
+	private TypedArray navMenuIcons;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.check_in);
+
+		setNavDrawer();
 		Log.i("override", "onCreate");
 		SharedPreferences sharedPref = getSharedPreferences(
 				"massCheckInTokenFile", MODE_PRIVATE);
@@ -45,13 +62,12 @@ public class CheckInActivity extends FragmentActivity {
 			Log.i("override", "ACCESS_TOKEN=" + Venue.ACCESS_TOKEN);
 		}
 		new CustomLocation(this);
-		adjustMap(); //initialize ui for map
+		adjustMap(); // initialize ui for map
 		parseVenues(CustomLocation.getRefreshedLocation());
 		final ListView lv = (ListView) findViewById(R.id.lvVenues);
 		prog = (ProgressBar) findViewById(R.id.progressBar);
 		prog.setVisibility(View.GONE);
-	
-	
+
 		lv.setClickable(true);
 		final Activity act = this;
 
@@ -71,6 +87,61 @@ public class CheckInActivity extends FragmentActivity {
 
 	}
 
+	private void setNavDrawer() {
+		navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		navMenuIcons = getResources()
+				.obtainTypedArray(R.array.nav_drawer_icons);
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+		navDrawerList = (ListView) findViewById(R.id.leftDrawerListView);
+		navDrawerItems = new ArrayList<NavDrawerItem>();
+
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons
+				.getResourceId(0, -1)));
+
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
+				.getResourceId(1, -1)));
+		
+
+		navMenuIcons.recycle();
+
+		adapter = new NavDrawerListAdapter(getApplicationContext(),
+				navDrawerItems);
+		navDrawerList.setAdapter(adapter);
+	
+
+		navDrawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout,
+				R.drawable.ic_drawer, R.string.open_drawer,
+				R.string.close_drawer);
+		navDrawerLayout.setDrawerListener(navDrawerToggle);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		navDrawerList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+				
+			}
+			
+		});
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		navDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		navDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -80,16 +151,20 @@ public class CheckInActivity extends FragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
+		if (navDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
 		switch (item.getItemId()) {
 		case R.id.action_search:
 			Intent in = new Intent(this,
-					com.foursquare.android.masscheckin.SearchActivity.class);		
+					com.foursquare.android.masscheckin.SearchActivity.class);
 			startActivity(in);
 			return true;
 		case R.id.action_refresh:
 			parseVenues(CustomLocation.getRefreshedLocation());
-			return true;		
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -110,12 +185,13 @@ public class CheckInActivity extends FragmentActivity {
 		} catch (Exception e) {
 
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT)
-					.show();			
+					.show();
 		}
 		return;
 	}
 
 	private void adjustMap() {
+
 		android.support.v4.app.FragmentManager myFragmentManager = getSupportFragmentManager();
 		SupportMapFragment mySupportMapFragment = (SupportMapFragment) myFragmentManager
 				.findFragmentById(R.id.map);

@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <resources>
 
@@ -27,5 +27,26 @@
     <string name="action_search">Search</string>
     <string name="title_activity_search">Search</string>
     <string name="venue_not_found">Venue Not Found</string>
-	<string name="action_refresh">Refresh</string>
-</resources>
+    <string name="action_refresh">Refresh</string>
+    <string name="switch_group_checkin">Group Checkin</string>
+    <string name="check_in">Make Check In</string>
+    <string name="arrange_groups">Arrange Groups</string>
+
+    <string name="open_drawer">Drawer Open</string>
+    <string name="close_drawer">Drawer Closed</string>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Make Check In</item>
+        <item>Arrange Groups</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_location_found</item>
+        <item>@drawable/ic_action_group</item>
+    </array>
+
+</resources> <!-- Content Description -->
+<!-- <string name="desc_list_item_icon">Item Icon</string> -->

@@ -8,6 +8,15 @@
 package com.foursquare.android.masscheckin;
 
 public final class R {
+    public static final class array {
+        /**  Nav Drawer List Item Icons 
+ Keep them in order as the titles are in 
+         */
+        public static final int nav_drawer_icons=0x7f090001;
+        /**  Nav Drawer Menu Items 
+         */
+        public static final int nav_drawer_items=0x7f090000;
+    }
     public static final class attr {
         /** 
     The size of the ad. It must be one of BANNER, FULL_BANNER, LEADERBOARD,
@@ -218,31 +227,44 @@ containing a value of this type.
         public static final int connect_to_foursquare_blue=0x7f020018;
         public static final int connect_to_foursquare_blue_default=0x7f020019;
         public static final int connect_to_foursquare_blue_pressed=0x7f02001a;
-        public static final int ic_action_search=0x7f02001b;
-        public static final int ic_launcher=0x7f02001c;
-        public static final int ic_plusone_medium_off_client=0x7f02001d;
-        public static final int ic_plusone_small_off_client=0x7f02001e;
-        public static final int ic_plusone_standard_off_client=0x7f02001f;
-        public static final int ic_plusone_tall_off_client=0x7f020020;
+        public static final int drawer_shadow=0x7f02001b;
+        public static final int ic_action_group=0x7f02001c;
+        public static final int ic_action_location_found=0x7f02001d;
+        public static final int ic_action_search=0x7f02001e;
+        public static final int ic_drawer=0x7f02001f;
+        public static final int ic_fsq_white=0x7f020020;
+        public static final int ic_launcher=0x7f020021;
+        public static final int ic_plusone_medium_off_client=0x7f020022;
+        public static final int ic_plusone_small_off_client=0x7f020023;
+        public static final int ic_plusone_standard_off_client=0x7f020024;
+        public static final int ic_plusone_tall_off_client=0x7f020025;
     }
     public static final class id {
-        public static final int action_refresh=0x7f050010;
-        public static final int action_search=0x7f050011;
-        public static final int action_settings=0x7f050012;
+        public static final int action_refresh=0x7f050018;
+        public static final int action_search=0x7f050019;
+        public static final int action_settings=0x7f05001a;
         public static final int btnLogin=0x7f050006;
+        public static final int container_layout=0x7f05000d;
+        public static final int counter=0x7f050013;
+        public static final int drawer_layout=0x7f05000c;
         public static final int editTxtSearch=0x7f050008;
-        public static final int frame=0x7f05000f;
+        public static final int frame=0x7f050014;
         public static final int hybrid=0x7f050004;
+        public static final int icon=0x7f050011;
+        public static final int leftDrawerListView=0x7f050017;
+        public static final int left_drawer=0x7f050015;
         public static final int lvSearchVenues=0x7f05000a;
-        public static final int lvVenues=0x7f05000d;
-        public static final int map=0x7f05000c;
+        public static final int lvVenues=0x7f05000f;
+        public static final int map=0x7f05000e;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int progressBar=0x7f05000e;
+        public static final int progressBar=0x7f050010;
         public static final int progressBarSearch=0x7f05000b;
         public static final int satellite=0x7f050002;
         public static final int searchImage=0x7f050009;
+        public static final int switchGroupCheckIn=0x7f050016;
         public static final int terrain=0x7f050003;
+        public static final int title=0x7f050012;
         public static final int topSearchText=0x7f050007;
         public static final int tvMessage=0x7f050005;
     }
@@ -253,11 +275,13 @@ containing a value of this type.
         public static final int activity_main=0x7f030000;
         public static final int activity_search=0x7f030001;
         public static final int check_in=0x7f030002;
-        public static final int loading=0x7f030003;
+        public static final int drawer_list_item=0x7f030003;
+        public static final int loading=0x7f030004;
+        public static final int nav_drawer_layout=0x7f030005;
     }
     public static final class menu {
-        public static final int check_in=0x7f090000;
-        public static final int search=0x7f090001;
+        public static final int check_in=0x7f0a0000;
+        public static final int search=0x7f0a0001;
     }
     public static final class string {
         public static final int action_refresh=0x7f060026;
@@ -265,6 +289,7 @@ containing a value of this type.
         public static final int action_settings=0x7f060020;
         public static final int app_name=0x7f06001b;
         public static final int app_not_installed_message=0x7f06001e;
+        public static final int arrange_groups=0x7f060029;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
@@ -288,6 +313,8 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f060014;
+        public static final int check_in=0x7f060028;
+        public static final int close_drawer=0x7f06002b;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -363,6 +390,8 @@ containing a value of this type.
         public static final int hello_world=0x7f060021;
         public static final int loading=0x7f06001a;
         public static final int menu_settings=0x7f06001c;
+        public static final int open_drawer=0x7f06002a;
+        public static final int switch_group_checkin=0x7f060027;
         public static final int title_activity_check_in=0x7f060022;
         public static final int title_activity_search=0x7f060024;
         public static final int title_activity_test1=0x7f06001f;

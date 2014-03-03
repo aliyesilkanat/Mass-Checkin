@@ -1,48 +1,55 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.foursquare.android.masscheckin.CheckInActivity" >
+    android:layout_height="match_parent" >
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="160dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ListView
-        android:id="@+id/lvVenues"
+    <RelativeLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/map"
-        android:background="#2A323D"
-        android:cacheColorHint="@android:color/transparent"
-        android:choiceMode="singleChoice"
-        android:focusable="true"
-        android:scrollingCache="true" >
+        tools:context="com.foursquare.android.masscheckin.CheckInActivity" >
 
-        <!-- android:listSelector="@android:drawable/darker_gray" -->
-        <!-- android:focusable="true" -->
-        <!-- android:choiceMode="singleChoice" -->
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <ListView
+            android:id="@+id/lvVenues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/map"
+            android:background="#2A323D"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:focusable="true"
+            android:scrollingCache="true" >
+
+            <!-- android:listSelector="@android:drawable/darker_gray" -->
+            <!-- android:focusable="true" -->
+            <!-- android:choiceMode="singleChoice" -->
 
 
-        <!-- android:scrollingCache="false" -->
-        <!-- android:drawSelectorOnTop="false" -->
+            <!-- android:scrollingCache="false" -->
+            <!-- android:drawSelectorOnTop="false" -->
 
-    </ListView>
+        </ListView>
 
-  
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp" />
+    </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/map"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp" />
+    <include layout="@layout/nav_drawer_layout"/>
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

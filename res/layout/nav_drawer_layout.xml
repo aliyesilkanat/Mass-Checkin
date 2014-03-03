@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/left_drawer"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@android:color/holo_blue_light" >
+
+        <Switch
+            android:id="@+id/switchGroupCheckIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00B4FF"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="@string/switch_group_checkin"
+            android:textColorHint="@android:color/holo_red_dark"
+            android:textColorLink="@android:color/holo_orange_dark" />
+
+        <ListView
+            android:id="@+id/leftDrawerListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/switchGroupCheckIn"
+            android:layout_gravity="start"
+            android:background="@android:color/holo_blue_light"
+            android:choiceMode="singleChoice"
+            android:divider="@android:drawable/divider_horizontal_bright"
+            android:dividerHeight="0dp"
+            android:gravity="start" />
+
+    </RelativeLayout>
