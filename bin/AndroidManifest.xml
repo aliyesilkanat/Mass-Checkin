@@ -18,7 +18,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -40,7 +40,7 @@
         <activity
             android:name="com.foursquare.android.nativeoauth.TokenExchangeActivity"
             android:theme="@android:style/Theme.Dialog" />
-   
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -52,10 +52,18 @@
             android:name="com.foursquare.android.masscheckin.CheckInActivity"
             android:label="@string/title_activity_check_in" >
         </activity>
-         <activity
+        <activity
             android:name="com.foursquare.android.masscheckin.SearchActivity"
             android:label="@string/title_activity_search"
             android:windowSoftInputMode="stateAlwaysVisible" >
+        </activity>
+        <activity
+            android:name="com.foursquare.android.masscheckin.ArrangeGroups"
+            android:label="@string/title_activity_arrange_groups" >
+        </activity>
+        <activity
+            android:name="com.foursquare.android.masscheckin.CreateGroup"
+            android:label="@string/title_activity_create_group" >
         </activity>
     </application>
 

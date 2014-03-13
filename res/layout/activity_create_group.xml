@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CreateGroup" >
+
+    <EditText
+        android:id="@+id/txtGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnCreateGroup"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnCreateGroup"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtGroupName"
+        android:layout_alignBottom="@+id/txtGroupName"
+        android:layout_alignParentRight="true"
+        android:text="Create Group" />
+
+    <ListView
+        android:id="@+id/lvFriends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtGroupName"
+        android:layout_below="@+id/btnCreateGroup"
+        android:cacheColorHint="@android:color/transparent"
+        android:choiceMode="singleChoice"
+        android:focusable="true"
+        android:paddingTop="15dp"
+        android:scrollingCache="true" >
+    </ListView>
+
+    <ProgressBar
+        android:id="@+id/progFriends"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtGroupName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
+
+    <TextView
+        android:id="@+id/txtLoadingFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progFriends"
+        android:layout_centerHorizontal="true"
+        android:text="loading Friends" 
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>

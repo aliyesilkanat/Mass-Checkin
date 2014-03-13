@@ -3,6 +3,11 @@ package com.foursquare.android.masscheckin;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.foursquare.android.masscheckin.asynctasks.LoadVenues;
+import com.foursquare.android.masscheckin.asynctasks.MakeCheckIn;
+import com.foursquare.android.masscheckin.classes.CustomLocation;
+import com.foursquare.android.masscheckin.classes.Venue;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.foursquare.android.masscheckin;
+package com.foursquare.android.masscheckin.classes;
 
 import java.util.Calendar;
 

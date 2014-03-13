@@ -1,4 +1,4 @@
-package com.foursquare.android.masscheckin;
+package com.foursquare.android.masscheckin.classes;
 
 import android.app.Activity;
 import android.content.Context;

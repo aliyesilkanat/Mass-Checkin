@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.foursquare.android.masscheckin;
+package com.foursquare.android.masscheckin.asynctasks;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,6 +14,14 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.foursquare.android.masscheckin.MainActivity;
+import com.foursquare.android.masscheckin.R;
+import com.foursquare.android.masscheckin.R.color;
+import com.foursquare.android.masscheckin.R.id;
+import com.foursquare.android.masscheckin.R.string;
+import com.foursquare.android.masscheckin.classes.DateSingleton;
+import com.foursquare.android.masscheckin.classes.Venue;
 
 import android.app.Activity;
 import android.content.Intent;

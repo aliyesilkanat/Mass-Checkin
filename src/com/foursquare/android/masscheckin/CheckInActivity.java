@@ -1,5 +1,6 @@
 package com.foursquare.android.masscheckin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewDebug.FlagToString;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.foursquare.android.masscheckin.asynctasks.LoadVenues;
+import com.foursquare.android.masscheckin.asynctasks.MakeCheckIn;
+import com.foursquare.android.masscheckin.classes.CustomLocation;
+import com.foursquare.android.masscheckin.classes.Venue;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,7 +94,7 @@ public class CheckInActivity extends FragmentActivity {
 	}
 
 	private void setNavDrawer() {
-		navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_checkin);
 
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
@@ -101,14 +107,12 @@ public class CheckInActivity extends FragmentActivity {
 
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
-		
 
 		navMenuIcons.recycle();
 
 		adapter = new NavDrawerListAdapter(getApplicationContext(),
 				navDrawerItems);
 		navDrawerList.setAdapter(adapter);
-	
 
 		navDrawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout,
 				R.drawable.ic_drawer, R.string.open_drawer,
@@ -118,14 +122,24 @@ public class CheckInActivity extends FragmentActivity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		navDrawerList.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				
-				
+				switch (arg2) {
+				case 0:
+					navDrawerLayout.closeDrawers();
+					break;
+				case 1:
+					Intent in = new Intent(
+							getApplicationContext(),
+							com.foursquare.android.masscheckin.ArrangeGroups.class);
+					in.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+					navDrawerLayout.closeDrawers();
+					startActivity(in);
+				default:
+					break;
+				}
 			}
-			
 		});
 	}
 

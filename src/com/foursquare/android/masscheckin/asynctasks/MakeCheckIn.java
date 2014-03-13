@@ -1,4 +1,4 @@
-package com.foursquare.android.masscheckin;
+package com.foursquare.android.masscheckin.asynctasks;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +12,10 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
+import com.foursquare.android.masscheckin.R;
+import com.foursquare.android.masscheckin.R.id;
+import com.foursquare.android.masscheckin.classes.Venue;
 
 import android.app.Activity;
 import android.os.AsyncTask;
