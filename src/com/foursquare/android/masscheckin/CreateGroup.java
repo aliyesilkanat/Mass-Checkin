@@ -16,7 +16,8 @@ import com.foursquare.android.masscheckin.classes.Friends;
 
 public class CreateGroup extends Activity {
 
-	List<Friends> listFriends = new ArrayList();
+	private List<Friends> listFriends = new ArrayList();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,10 +25,10 @@ public class CreateGroup extends Activity {
 		findViewById(R.id.txtLoadingFriends).setVisibility(View.GONE);
 		findViewById(R.id.progFriends).setVisibility(View.GONE);
 		try {
-			new LoadFriends().execute(listFriends,this);
+			new LoadFriends().execute(listFriends, this);
 		} catch (Exception e) {
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT)
-			.show();
+					.show();
 		}
 	}
 

@@ -17,6 +17,7 @@ import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 	private ProgressBar progLoading;
 	private TextView txtLoading;
 	private ListView lvFriends;
+	private Button btnCreateGroup;
 	private String loadFriendsURL = "https://api.foursquare.com/v2/users/self/friends?oauth_token="
 			+ Venue.ACCESS_TOKEN + "&v=" + DateSingleton.getDate();
 
@@ -48,6 +50,8 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 		progLoading = (ProgressBar) act.findViewById(R.id.progFriends);
 		txtLoading = (TextView) act.findViewById(R.id.txtLoadingFriends);
 		lvFriends = (ListView) act.findViewById(R.id.lvFriends);
+		btnCreateGroup= (Button) act.findViewById(R.id.btnCreateGroup);
+		
 		act.runOnUiThread(new Runnable() {
 
 			@Override
@@ -55,6 +59,7 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 				lvFriends.setVisibility(View.GONE);
 				progLoading.setVisibility(View.VISIBLE);
 				txtLoading.setVisibility(View.VISIBLE);
+				btnCreateGroup.setEnabled(false);
 			}
 		});
 		try {
@@ -110,21 +115,14 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 	CustomFriendsListAdapter	adap = new CustomFriendsListAdapter(result.getApplicationContext(),
 				listFriends);
 		lvFriends.setAdapter(adap);
-//		ArrayAdapter adapter = new ArrayAdapter<String>(
-//				result.getApplicationContext(),
-//				android.R.layout.simple_dropdown_item_1line, android.R.id.text1);
-//		lvFriends.setAdapter(adapter);
-//	
-	
-//		for (Friends friend : listFriends) {
-//			adapter.add(friend.firstName + " " + friend.LastName);
-//		}
+
 		result.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				progLoading.setVisibility(View.GONE);
 				txtLoading.setVisibility(View.GONE);
 				lvFriends.setVisibility(View.VISIBLE);
+				btnCreateGroup.setEnabled(true);
 			}
 		});
 		super.onPostExecute(result);
