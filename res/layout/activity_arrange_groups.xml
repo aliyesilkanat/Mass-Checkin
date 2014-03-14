@@ -10,10 +10,10 @@
         android:id="@+id/container_layout_groups"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".ArrangeGroups" >
 
         <Button
@@ -32,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/btnCreateNewGroup"
             android:layout_below="@+id/btnCreateNewGroup"
+            android:paddingBottom="3dp"
+            android:paddingTop="5dp"
             android:text="Groups" />
 
         <ListView
@@ -39,12 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/txtGroups"
-
             android:cacheColorHint="@android:color/transparent"
             android:choiceMode="singleChoice"
             android:focusable="true"
             android:scrollingCache="true" />
-
     </RelativeLayout>
 
     <include layout="@layout/nav_drawer_layout" />

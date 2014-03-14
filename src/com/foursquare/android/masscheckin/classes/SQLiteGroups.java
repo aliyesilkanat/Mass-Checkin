@@ -1,6 +1,9 @@
 package com.foursquare.android.masscheckin.classes;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import com.foursquare.android.masscheckin.CheckInActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,36 +12,30 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class SqlLite extends SQLiteOpenHelper {
+public class SQLiteGroups extends SQLiteOpenHelper {
 
-	// Database Version
 	private static final int DATABASE_VERSION = 1;
-	// Database Name
 	private static final String DATABASE_NAME = "GroupDB";
-
-	// Books table name
 	private static final String TABLE_GROUPS = "groups";
 
-	// Books Table Columns names
 	private static final String KEY_ID = "id";
 	private static final String KEY_NAME = "name";
 	private static final String KEY_FRIENDS = "friends";
 
 	private static final String[] COLUMNS = { KEY_ID, KEY_NAME, KEY_FRIENDS };
+	private SQLiteFriends sqlFriends = new SQLiteFriends(
+			CheckInActivity.context);
 
-	public SqlLite(Context context) {
+	public SQLiteGroups(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// SQL statement to create book table
 		String CREATE_GROUP_TABLE = "CREATE TABLE groups ( "
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, "
 				+ "friends TEXT )";
 
-		// create books table
 		db.execSQL(CREATE_GROUP_TABLE);
 	}
 
@@ -46,11 +43,10 @@ public class SqlLite extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		db.execSQL("DROP TABLE IF EXISTS groups");
 
-		// create fresh books table
 		this.onCreate(db);
 	}
 
-	public void addGroup(Group group) {
+	public int addGroup(Group group) {
 		Log.d("addGroup", group.name);
 
 		// 1. get reference to writable DB
@@ -63,21 +59,21 @@ public class SqlLite extends SQLiteOpenHelper {
 		String strFriends = "";
 		for (Friends friend : group.friendList) {
 			strFriends += friend.id + "#";
-			
-			//FRIENDLER veritabanina eklenmeli
+			sqlFriends.addFriend(friend);
 		}
 		strFriends = strFriends.substring(0, strFriends.length() - 1);
 		Log.d("addGroup", strFriends);
 		values.put(KEY_FRIENDS, strFriends);
 
 		// 3. insert
-		db.insert(TABLE_GROUPS, // table
+		int id = (int) db.insert(TABLE_GROUPS, // table
 				null, // nullColumnHack
 				values); // key/value -> keys = column names/ values = column
 							// values
 
 		// 4. close
 		db.close();
+		return id;
 	}
 
 	public Group getGroup(int id) {
@@ -97,21 +93,91 @@ public class SqlLite extends SQLiteOpenHelper {
 		// 3. if we got results get the first one
 		if (cursor != null)
 			cursor.moveToFirst();
-
 		Group group = new Group();
-
 		group.id = Integer.parseInt(cursor.getString(0));
 		group.name = cursor.getString(1);
-		Log.d("getGroup",cursor.getString(2));
+		Log.d("getGroup", cursor.getString(2));
 		String[] strFriendsIds = cursor.getString(2).split("#");
 		for (String string : strFriendsIds) {
-			Friends f = new Friends();
-			// FRIENDS ICIN TABLO YAPILMALI
-			f.id = string;
-			group.friendList.add(f);
+
+			group.friendList.add(sqlFriends.getFriend(string));
 		}
 		// log
 		Log.d("getGroup(" + id + ")", group.name);
 		return group;
+	}
+
+	public List<Group> getAllGroups() {
+		List<Group> groupList = new LinkedList<Group>();
+
+		// 1. build the query
+		String query = "SELECT  * FROM " + TABLE_GROUPS;
+
+		// 2. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+
+		// 3. go over each row, build book and add it to list
+		Group group = null;
+		if (cursor.moveToFirst()) {
+			do {
+				group = new Group();
+				group.id = Integer.parseInt(cursor.getString(0));
+				group.name = cursor.getString(1);
+				Log.d("getGroup", cursor.getString(2));
+				String[] strFriendsIds = cursor.getString(2).split("#");
+				for (String string : strFriendsIds) {
+					group.friendList.add(sqlFriends.getFriend(string));
+
+				}
+				groupList.add(group);
+				Log.d("getAllBooks()", group.name);
+			} while (cursor.moveToNext());
+		}
+
+		return groupList;
+	}
+
+	public int updateGroup(Group group) {
+
+		// 1. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(KEY_NAME, group.name); // get title
+		String strFriends = "";
+		for (Friends friend : group.friendList) {
+			strFriends += friend.id + "#";
+			sqlFriends.addFriend(friend);
+		}
+		strFriends = strFriends.substring(0, strFriends.length() - 1);
+		Log.d("updateGroup", strFriends);
+		values.put(KEY_FRIENDS, strFriends);
+		// 3. updating row
+		int i = db.update(TABLE_GROUPS, // table
+				values, // column/value
+				KEY_ID + " = ?", // selections
+				new String[] { String.valueOf(group.id) }); // selection args
+
+		// 4. close
+		db.close();
+
+		return i;
+
+	}
+
+	public void deleteGroup(Group group) {
+
+		// 1. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+		// 2. delete
+		db.delete(TABLE_GROUPS, // table name
+				KEY_ID + " = ?", // selections
+				new String[] { String.valueOf(group.id) }); // selections args
+		// 3. close
+		db.close();
+		// log
+		Log.d("deleteGroup", group.name);
 	}
 }

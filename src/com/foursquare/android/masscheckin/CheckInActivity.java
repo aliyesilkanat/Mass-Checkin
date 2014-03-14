@@ -1,10 +1,10 @@
 package com.foursquare.android.masscheckin;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewDebug.FlagToString;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -39,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class CheckInActivity extends FragmentActivity {
 	List<Venue> venueList = new ArrayList<Venue>();
+	public static Context context;
 	private GoogleMap myMap;
 	private SharedPreferences.Editor prefsEditor;
 	public ProgressBar prog;
@@ -57,7 +57,7 @@ public class CheckInActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.check_in);
-
+		context=this.getApplicationContext();
 		setNavDrawer();
 		Log.i("override", "onCreate");
 		SharedPreferences sharedPref = getSharedPreferences(

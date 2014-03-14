@@ -4,14 +4,15 @@ import java.text.Collator;
 import java.util.Locale;
 
 public class Friends implements Comparable<Friends> {
-	public String id;
+	
 	public String firstName;
 	public String LastName;
 	public String photoPrefix;
 	public String photoSuffix;
 	public boolean hasPhoto;
 	public boolean isSelected;
-
+	public String id;
+	
 	public String getSmallPhoto() {
 		if (hasPhoto)
 			return photoPrefix + "128x128" + photoSuffix;

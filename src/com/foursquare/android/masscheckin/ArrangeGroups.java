@@ -1,6 +1,7 @@
 package com.foursquare.android.masscheckin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,9 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.foursquare.android.masscheckin.classes.Group;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 
@@ -30,6 +33,9 @@ public class ArrangeGroups extends Activity {
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	private TypedArray navMenuIcons;
+	private ListView lvGroups;
+	public static List<Group> groupList = new ArrayList();
+	private List<String> groupNames = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +43,38 @@ public class ArrangeGroups extends Activity {
 
 		setContentView(R.layout.activity_arrange_groups);
 		setNavDrawer();
-	findViewById(R.id.btnCreateNewGroup).setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			Intent intent = new Intent(getApplicationContext(),com.foursquare.android.masscheckin.CreateGroup.class);
-			startActivity(intent);
-			
+		lvGroups = (ListView) findViewById(R.id.lvGroups);
+		findViewById(R.id.btnCreateNewGroup).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(
+								getApplicationContext(),
+								com.foursquare.android.masscheckin.CreateGroup.class);
+						startActivity(intent);
+
+					}
+				});
+
+		for (Group g : groupList) {
+			groupNames.add(g.name);
 		}
-	});
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, android.R.id.text1,
+				groupNames);
+		lvGroups.setAdapter(adapter);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		groupNames = new ArrayList<String>();
+		for (Group g : groupList) {
+			groupNames.add(g.name);
+		}
+		adapter.notifyDataSetChanged();
+		
 	}
 
 	@Override
