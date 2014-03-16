@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.foursquare.android.masscheckin.classes.Group;
+import com.foursquare.android.masscheckin.classes.SQLiteGroups;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 
@@ -28,19 +29,19 @@ public class ArrangeGroups extends Activity {
 	private DrawerLayout navDrawerLayout;
 	private ListView navDrawerList;
 	private ActionBarDrawerToggle navDrawerToggle;
-
 	private String[] navMenuTitles;
 	private ArrayList<NavDrawerItem> navDrawerItems;
-	private NavDrawerListAdapter adapter;
+	private NavDrawerListAdapter navAdapter;
 	private TypedArray navMenuIcons;
+
 	private ListView lvGroups;
 	public static List<Group> groupList = new ArrayList();
 	private List<String> groupNames = new ArrayList<String>();
+	private ArrayAdapter<String> groupAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_arrange_groups);
 		setNavDrawer();
 		lvGroups = (ListView) findViewById(R.id.lvGroups);
@@ -57,24 +58,33 @@ public class ArrangeGroups extends Activity {
 					}
 				});
 
-		for (Group g : groupList) {
+		loadGroups();
+		
+		
+		
+		findViewById(R.id.btnDeleteDB).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			deleteDatabase("GroupDB");
+			lvGroups.setAdapter(null);			}
+		});
+	}
+	private void loadGroups(){
+		groupNames = new ArrayList<String>();
+		SQLiteGroups sql = new SQLiteGroups(this);
+		for (Group g : sql.getAllGroups()) {
 			groupNames.add(g.name);
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		groupAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1,
 				groupNames);
-		lvGroups.setAdapter(adapter);
+		lvGroups.setAdapter(groupAdapter);
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
-		groupNames = new ArrayList<String>();
-		for (Group g : groupList) {
-			groupNames.add(g.name);
-		}
-		adapter.notifyDataSetChanged();
-		
+		loadGroups();
 	}
 
 	@Override
@@ -111,9 +121,9 @@ public class ArrangeGroups extends Activity {
 
 		navMenuIcons.recycle();
 
-		adapter = new NavDrawerListAdapter(getApplicationContext(),
+		navAdapter = new NavDrawerListAdapter(getApplicationContext(),
 				navDrawerItems);
-		navDrawerList.setAdapter(adapter);
+		navDrawerList.setAdapter(navAdapter);
 
 		navDrawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout,
 				R.drawable.ic_drawer, R.string.open_drawer,

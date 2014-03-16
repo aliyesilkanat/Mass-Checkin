@@ -27,12 +27,14 @@ public class CreateGroup extends Activity {
 	private SQLiteGroups sqlGroups;
 	private EditText txtGroupName;
 	private Button btnCreateGroup;
-
+	public static Activity currentAct; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_group);
-		sqlGroups = new SQLiteGroups(getApplicationContext());
+		currentAct=this;
+	
+		sqlGroups = new SQLiteGroups(this);
 		findViewById(R.id.txtLoadingFriends).setVisibility(View.GONE);
 		findViewById(R.id.progFriends).setVisibility(View.GONE);
 		try {
@@ -97,6 +99,7 @@ public class CreateGroup extends Activity {
 							.getText().toString();
 					group.id = sqlGroups.addGroup(group);
 					ArrangeGroups.groupList.add(group);
+					finish();
 				}
 			}
 		});

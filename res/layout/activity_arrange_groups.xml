@@ -25,7 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
             android:text="@string/btn_create_new_group" />
-
+        
         <TextView
             android:id="@+id/txtGroups"
             android:layout_width="wrap_content"
@@ -45,6 +45,17 @@
             android:choiceMode="singleChoice"
             android:focusable="true"
             android:scrollingCache="true" />
+
+        <Button
+            android:id="@+id/btnDeleteDB"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/lvGroups"
+            android:layout_marginTop="14dp"
+            android:text="Delete DB" />
+
     </RelativeLayout>
 
     <include layout="@layout/nav_drawer_layout" />

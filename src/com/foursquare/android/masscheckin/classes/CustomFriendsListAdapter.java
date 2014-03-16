@@ -6,11 +6,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.foursquare.android.masscheckin.CreateGroup;
@@ -46,8 +46,9 @@ public class CustomFriendsListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder;
+
 		if (convertView == null) {
 			LayoutInflater mInflater = (LayoutInflater) context
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -117,9 +118,23 @@ public class CustomFriendsListAdapter extends BaseAdapter {
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		convertView.setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (friendList.get(position).isSelected)
+							friendList.get(position).isSelected = false;
+						else
+							friendList.get(position).isSelected = true;
+						notifyDataSetChanged();
+					}
+				});
+
 		viewHolder.checkbox.setTag(position); // This line is important.
 
-		viewHolder.text.setText( friendList.get(position).firstName+" "+friendList.get(position).LastName);
+		viewHolder.text.setText(friendList.get(position).firstName + " "
+				+ friendList.get(position).LastName);
 		viewHolder.checkbox.setChecked(friendList.get(position).isSelected);
 
 		this.notifyDataSetChanged();

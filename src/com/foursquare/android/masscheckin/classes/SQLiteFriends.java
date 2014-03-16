@@ -11,9 +11,9 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "GroupDB";
-	private static final String TABLE_GROUPS = "friends";
+	private static final String TABLE_FRIENDS = "friends";
 
-	private static final String KEY_ID = "id"; // DB Key degil, FSQ Key
+	private static final String KEY_ID = "_id"; // DB Key degil, FSQ Key
 	private static final String KEY_FIRST_NAME = "firstName";
 	private static final String KEY_LAST_NAME = "lastName";
 	private static final String KEY_PHOTO_PREFIX = "photoPrefix;";
@@ -28,28 +28,30 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_GROUP_TABLE = "CREATE TABLE groups ( " + "id TEXT, "
+		Log.d("CreateFriend", "Before Table Friend ");
+		String CREATE_FRIEND_TABLE = "CREATE TABLE friends ( " + "_id TEXT, "
 				+ "firstName TEXT, " + "lastName TEXT, " + "photoPrefix TEXT, "
-				+ "photoSuffix TEXT, " + "hasPhoto INTEGER)";
-		db.execSQL(CREATE_GROUP_TABLE);
+				+ "photoSuffix TEXT, " + "hasPhoto INTEGER )";
+		db.execSQL(CREATE_FRIEND_TABLE);
+		Log.d("Create Friend", "After Table Friend ");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS groups");
+		db.execSQL("DROP TABLE IF EXISTS friends");
 		this.onCreate(db);
 	}
 
 	public void addFriend(Friends friend) {
-		Log.d("addGroup", friend.firstName + " " + friend.LastName);
+		Log.d("addFriends", friend.firstName + " " + friend.LastName);
 
 		// 1. get reference to writable DB
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = this.getReadableDatabase();
 
 		// Daha once olusturulan friend mevcut mu sorgusu
-		Cursor cursor = db.query(TABLE_GROUPS, // a. table
+		Cursor cursor = db.query(TABLE_FRIENDS, // a. table
 				COLUMNS, // b. column names
-				" id = ?", // c. selections
+				"_id = ?", // c. selections
 				new String[] { friend.id }, // d. selections args
 				null, // e. group by
 				null, // f. having
@@ -59,8 +61,9 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 		// 3. if we got results get the first one
 		if (cursor != null)
 			cursor.moveToFirst();
-		else { //daha once bu id'de (fsq id) olusturulan friend yoksa yeni ekle
-			// 2. create ContentValues to add key "column"/value
+		else { // daha once bu id'de (fsq id) olusturulan friend yoksa yeni ekle
+				// 2. create ContentValues to add key "column"/value
+			db = this.getWritableDatabase();
 			ContentValues values = new ContentValues();
 			values.put(KEY_ID, friend.id);
 			values.put(KEY_FIRST_NAME, friend.firstName);
@@ -70,7 +73,7 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 			values.put(KEY_HAS_PHOTO, friend.hasPhoto ? 1 : 0); // bool - int
 																// conversion
 			// 3. insert
-			db.insert(TABLE_GROUPS, // table
+			db.insert(TABLE_FRIENDS, // table
 					null, // nullColumnHack
 					values); // key/value -> keys = column names/ values =
 								// column
@@ -86,7 +89,7 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		// 2. build query
-		Cursor cursor = db.query(TABLE_GROUPS, // a. table
+		Cursor cursor = db.query(TABLE_FRIENDS, // a. table
 				COLUMNS, // b. column names
 				" id = ?", // c. selections
 				new String[] { id }, // d. selections args
@@ -127,7 +130,7 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 		// conversion
 		Log.d("updateFriend", friend.firstName + " " + friend.LastName);
 		// 3. updating row
-		int i = db.update(TABLE_GROUPS, // table
+		int i = db.update(TABLE_FRIENDS, // table
 				values, // column/value
 				KEY_ID + " = ?", // selections
 				new String[] { friend.id }); // selection args
@@ -137,18 +140,19 @@ public class SQLiteFriends extends SQLiteOpenHelper {
 
 		return i;
 	}
+
 	public void deleteFriend(Friends friend) {
 
 		// 1. get reference to writable DB
 		SQLiteDatabase db = this.getWritableDatabase();
 		// 2. delete
-		db.delete(TABLE_GROUPS, // table name
+		db.delete(TABLE_FRIENDS, // table name
 				KEY_ID + " = ?", // selections
 				new String[] { friend.id }); // selections args
 		// 3. close
 		db.close();
 		// log
-		Log.d("deleteFriend",friend.firstName+ " "+ friend.LastName);
+		Log.d("deleteFriend", friend.firstName + " " + friend.LastName);
 	}
 
 }

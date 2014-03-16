@@ -50,8 +50,8 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 		progLoading = (ProgressBar) act.findViewById(R.id.progFriends);
 		txtLoading = (TextView) act.findViewById(R.id.txtLoadingFriends);
 		lvFriends = (ListView) act.findViewById(R.id.lvFriends);
-		btnCreateGroup= (Button) act.findViewById(R.id.btnCreateGroup);
-		
+		btnCreateGroup = (Button) act.findViewById(R.id.btnCreateGroup);
+
 		act.runOnUiThread(new Runnable() {
 
 			@Override
@@ -77,7 +77,7 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 			s = responseJson.getString("friends");
 			responseJson = new JSONObject(s);
 			arrayFriends = responseJson.getJSONArray("items");
-			defaultClient.close();
+
 			for (int i = 0; i < arrayFriends.length(); i++) {
 				JSONObject jObj = arrayFriends.getJSONObject(i);
 
@@ -105,6 +105,8 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 							Toast.LENGTH_LONG).show();
 				}
 			});
+		} finally {
+			defaultClient.close();
 		}
 		return act;
 	}
@@ -112,8 +114,8 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 	@Override
 	protected void onPostExecute(Activity result) {
 		Collections.sort(listFriends);
-	CustomFriendsListAdapter	adap = new CustomFriendsListAdapter(result.getApplicationContext(),
-				listFriends);
+		CustomFriendsListAdapter adap = new CustomFriendsListAdapter(
+				result.getApplicationContext(), listFriends);
 		lvFriends.setAdapter(adap);
 
 		result.runOnUiThread(new Runnable() {

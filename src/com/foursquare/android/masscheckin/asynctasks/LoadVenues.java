@@ -66,14 +66,13 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 		ProgressBar nonFinalProg = null;
 
 		if (loadType == CONST_LOADVENUES) {
-		
+
 			nonFinalProg = (ProgressBar) act.findViewById(R.id.progressBar);
 			nonFinalLv = (ListView) act.findViewById(R.id.lvVenues);
 			venueSearchUrl = "https://api.foursquare.com/v2/venues/search?ll="
 					+ ll.getLatitude() + "," + ll.getLongitude()
 					+ "&llAcc=1&altAcc=1&limit=20&intent=checkin&oauth_token="
-					+ Venue.ACCESS_TOKEN + "&v="
-					+ DateSingleton.getDate();
+					+ Venue.ACCESS_TOKEN + "&v=" + DateSingleton.getDate();
 		} else if (loadType == CONST_SUGGESTVENUES) {
 			nonFinalProg = (ProgressBar) act
 					.findViewById(R.id.progressBarSearch);
@@ -83,8 +82,7 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 					+ ll.getLatitude() + "," + ll.getLongitude()
 					+ "&llAcc=10&altAcc=10&query=" + query
 					+ "&intent=checkin&limit=20&oauth_token="
-					+ Venue.ACCESS_TOKEN + "&v="
-					+ DateSingleton.getDate();
+					+ Venue.ACCESS_TOKEN + "&v=" + DateSingleton.getDate();
 		}
 		prog = nonFinalProg;
 		final ListView lv = nonFinalLv;
@@ -112,7 +110,7 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 
 			JSONObject responseJson = new JSONObject(s);
 			arrayVenues = responseJson.getJSONArray("venues");
-			defaultClient.close();
+		
 			if (arrayVenues.length() == 0)
 
 			{
@@ -121,7 +119,8 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 					@Override
 					public void run() {
 						Toast.makeText(act.getApplicationContext(),
-								R.string.venue_not_found, Toast.LENGTH_LONG).show();
+								R.string.venue_not_found, Toast.LENGTH_LONG)
+								.show();
 
 					}
 				});
@@ -182,6 +181,8 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 				}
 			});
 
+		}finally {
+			defaultClient.close();
 		}
 
 		return act;
@@ -270,7 +271,7 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 					if (loadType == CONST_LOADVENUES) {
 						result.findViewById(R.id.progressBar).setVisibility(
 								View.GONE);
-					
+
 					} else if (loadType == CONST_SUGGESTVENUES) {
 						result.findViewById(R.id.progressBarSearch)
 								.setVisibility(View.GONE);
@@ -280,7 +281,7 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 			});
 		} catch (final Exception ex) {
 			Log.i("TOKEN", ex.getMessage());
-			defaultClient.close();
+
 			Intent intent = new Intent(result, MainActivity.class);
 			result.startActivity(intent);
 			result.finish();
@@ -293,6 +294,6 @@ public class LoadVenues extends AsyncTask<Object, View, Activity> {
 
 				}
 			});
-		}
+		} 
 	}
 }
