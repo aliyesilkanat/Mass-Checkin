@@ -5,25 +5,22 @@
     android:background="@android:drawable/list_selector_background"
     android:paddingTop="10dp" >
 
- 
     <TextView
         android:id="@+id/group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:layout_marginLeft="5dp"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-     android:text="Group Name"
+        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
-     
-/>
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:text="Group Name"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
- <CheckBox
-     android:id="@+id/checkTagGroupDeletion"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_alignParentRight="true"
-     android:layout_alignParentTop="true"
-     android:paddingTop="10dp" />
-    
+    <CheckBox
+        android:id="@+id/checkTagGroupDeletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp" />
+
 </RelativeLayout>

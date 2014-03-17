@@ -2,10 +2,8 @@ package com.foursquare.android.masscheckin.asynctasks;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.text.Collator;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,19 +14,19 @@ import android.app.Activity;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foursquare.android.masscheckin.CreateGroup;
 import com.foursquare.android.masscheckin.R;
 import com.foursquare.android.masscheckin.classes.CustomFriendsListAdapter;
 import com.foursquare.android.masscheckin.classes.DateSingleton;
 import com.foursquare.android.masscheckin.classes.Friends;
 import com.foursquare.android.masscheckin.classes.Venue;
-import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 
 public class LoadFriends extends AsyncTask<Object, View, Activity> {
 	private List<Friends> listFriends;
@@ -124,7 +122,9 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 				progLoading.setVisibility(View.GONE);
 				txtLoading.setVisibility(View.GONE);
 				lvFriends.setVisibility(View.VISIBLE);
-				btnCreateGroup.setEnabled(true);
+				if (((EditText) CreateGroup.currentAct
+						.findViewById(R.id.txtGroupName)).getText().length() > 0)
+					btnCreateGroup.setEnabled(true);
 			}
 		});
 		super.onPostExecute(result);

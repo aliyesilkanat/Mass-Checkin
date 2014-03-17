@@ -1,7 +1,9 @@
 package com.foursquare.android.masscheckin;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,10 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.foursquare.android.masscheckin.classes.CustomGroupsListAadapter;
 import com.foursquare.android.masscheckin.classes.Group;
 import com.foursquare.android.masscheckin.classes.SQLiteGroups;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
@@ -36,15 +39,39 @@ public class ArrangeGroups extends Activity {
 
 	private ListView lvGroups;
 	public static List<Group> groupList = new ArrayList();
-	private List<String> groupNames = new ArrayList<String>();
-	private ArrayAdapter<String> groupAdapter;
+	private Button deleteGroups;
+	public static Activity act;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_arrange_groups);
 		setNavDrawer();
+		act = this;
 		lvGroups = (ListView) findViewById(R.id.lvGroups);
+		deleteGroups = (Button) findViewById(R.id.btnDeleteGroups);
+		deleteGroups.setEnabled(false);
+		deleteGroups.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				SQLiteGroups sql = new SQLiteGroups(act);
+				Queue<Group> deletionQueue = new LinkedList<Group>();
+				for (Group g : groupList) {
+					if (g.isSelectedToDeletion) {
+						sql.deleteGroup(g);
+						deletionQueue.add(g);
+					}
+				}
+				while (deletionQueue.size() != 0) {
+					groupList.remove(deletionQueue.poll());
+				}
+				CustomGroupsListAadapter adap = new CustomGroupsListAadapter(
+						act, groupList);
+				lvGroups.setAdapter(adap);
+				deleteGroups.setEnabled(false);
+			}
+		});
 		findViewById(R.id.btnCreateNewGroup).setOnClickListener(
 				new OnClickListener() {
 
@@ -59,28 +86,40 @@ public class ArrangeGroups extends Activity {
 				});
 
 		loadGroups();
-		
-		
-		
-		findViewById(R.id.btnDeleteDB).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-			deleteDatabase("GroupDB");
-			lvGroups.setAdapter(null);			}
-		});
+
+		findViewById(R.id.btnDeleteDB).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						deleteDatabase("GroupDB");
+						lvGroups.setAdapter(null);
+					}
+				});
 	}
-	private void loadGroups(){
-		groupNames = new ArrayList<String>();
+
+	private void loadGroups() {
+
 		SQLiteGroups sql = new SQLiteGroups(this);
+		groupList = new ArrayList();
 		for (Group g : sql.getAllGroups()) {
-			groupNames.add(g.name);
+			groupList.add(g);
 		}
-		groupAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1,
-				groupNames);
-		lvGroups.setAdapter(groupAdapter);
+		CustomGroupsListAadapter adap = new CustomGroupsListAadapter(this,
+				groupList);
+		lvGroups.setAdapter(adap);
+		adap.notifyDataSetChanged();
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
