@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@android:drawable/list_selector_background"
+    android:paddingTop="10dp" >
+
+    <ImageButton
+        android:id="@+id/imgDeleteGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/edited_group_name"
+        android:gravity="center_vertical"
+        android:src="@drawable/ic_action_discard"
+        android:background="#80000000" />
+
+    <TextView
+        android:id="@+id/edited_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/imgDeleteGroup"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingRight="40dp"
+        android:text="GROUP NAME"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+    
+</RelativeLayout>

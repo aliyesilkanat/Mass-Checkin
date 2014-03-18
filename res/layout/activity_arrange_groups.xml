@@ -64,6 +64,14 @@
             android:layout_below="@+id/btnCreateNewGroup"
             android:text="Delete DB" />
 
+        <Button
+            android:id="@+id/btnEditGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnDeleteDB"
+            android:layout_alignParentRight="true"
+            android:text="Edit Groups" />
+
     </RelativeLayout>
 
     <include layout="@layout/nav_drawer_layout" />

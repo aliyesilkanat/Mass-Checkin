@@ -14,26 +14,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.foursquare.android.masscheckin.asynctasks.LoadFriends;
+import com.foursquare.android.masscheckin.classes.CustomFriendsListAdapter;
 import com.foursquare.android.masscheckin.classes.Friends;
 import com.foursquare.android.masscheckin.classes.Group;
 import com.foursquare.android.masscheckin.classes.SQLiteGroups;
 
 public class CreateGroup extends Activity {
-
+	public static int CONSTANT_CREATE_GROUP = 10;
+	public static int CONSTANT_EDIT_GROUP = 11;
+	public static int ACTION_MODE = CONSTANT_CREATE_GROUP;
 	private List<Friends> listFriends = new ArrayList();
 	private SQLiteGroups sqlGroups;
 	private EditText txtGroupName;
 	private Button btnCreateGroup;
-	public static Activity currentAct; 
+	public static Activity currentAct;
+	public static Group editingGroup;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_group);
-		currentAct=this;
-	
+		currentAct = this;
+
 		sqlGroups = new SQLiteGroups(this);
 		findViewById(R.id.txtLoadingFriends).setVisibility(View.GONE);
 		findViewById(R.id.progFriends).setVisibility(View.GONE);
@@ -45,6 +51,18 @@ public class CreateGroup extends Activity {
 		}
 		btnCreateGroup = (Button) findViewById(R.id.btnCreateGroup);
 		txtGroupName = (EditText) findViewById(R.id.txtGroupName);
+		if (ACTION_MODE == CONSTANT_EDIT_GROUP) {
+			for (Friends friend : listFriends) {
+				for (Friends f : editingGroup.friendList) {
+					if (friend.id.equals(f.id))
+						friend.isSelected = true;
+				}
+			}
+			txtGroupName.setText(editingGroup.name);
+			CustomFriendsListAdapter adapter = new CustomFriendsListAdapter(this, listFriends);
+			((ListView)findViewById(R.id.lvFriends)).setAdapter(adapter);
+		}
+
 		txtGroupName.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -103,6 +121,7 @@ public class CreateGroup extends Activity {
 				}
 			}
 		});
+
 	}
 
 	@Override

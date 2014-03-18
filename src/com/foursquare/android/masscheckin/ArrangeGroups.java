@@ -77,6 +77,7 @@ public class ArrangeGroups extends Activity {
 
 					@Override
 					public void onClick(View v) {
+						CreateGroup.ACTION_MODE=CreateGroup.CONSTANT_CREATE_GROUP;
 						Intent intent = new Intent(
 								getApplicationContext(),
 								com.foursquare.android.masscheckin.CreateGroup.class);
@@ -96,6 +97,17 @@ public class ArrangeGroups extends Activity {
 						lvGroups.setAdapter(null);
 					}
 				});
+		
+		findViewById(R.id.btnEditGroups).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(act,EditGroups.class);
+				navDrawerLayout.closeDrawers();
+				startActivity(intent);
+				
+			}
+		});
 	}
 
 	private void loadGroups() {
@@ -114,10 +126,7 @@ public class ArrangeGroups extends Activity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		Intent intent = new Intent(Intent.ACTION_MAIN);
-		intent.addCategory(Intent.CATEGORY_HOME);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
+//		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	@Override
@@ -179,12 +188,12 @@ public class ArrangeGroups extends Activity {
 
 				switch (arg2) {
 				case 0:
-					Intent in = new Intent(
+					Intent intent = new Intent(
 							getApplicationContext(),
 							com.foursquare.android.masscheckin.CheckInActivity.class);
-					in.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					navDrawerLayout.closeDrawers();
-					startActivity(in);
+					startActivity(intent);
 					break;
 				case 1:
 					navDrawerLayout.closeDrawers();

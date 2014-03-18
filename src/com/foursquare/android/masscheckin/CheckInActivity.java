@@ -133,7 +133,7 @@ public class CheckInActivity extends FragmentActivity {
 					Intent in = new Intent(
 							getApplicationContext(),
 							com.foursquare.android.masscheckin.ArrangeGroups.class);
-					in.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+					in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
 					navDrawerLayout.closeDrawers();
 					startActivity(in);
 				default:
