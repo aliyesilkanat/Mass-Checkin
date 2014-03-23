@@ -3,11 +3,6 @@ package com.foursquare.android.masscheckin;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.foursquare.android.masscheckin.asynctasks.LoadVenues;
-import com.foursquare.android.masscheckin.asynctasks.MakeCheckIn;
-import com.foursquare.android.masscheckin.classes.CustomLocation;
-import com.foursquare.android.masscheckin.classes.Venue;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +20,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import com.foursquare.android.masscheckin.asynctasks.LoadVenues;
+import com.foursquare.android.masscheckin.asynctasks.MakeCheckIn;
+import com.foursquare.android.masscheckin.classes.CustomLocation;
+import com.foursquare.android.masscheckin.classes.Venue;
 
 public class SearchActivity extends Activity {
 	List<Venue> venueSearchList = new ArrayList<Venue>();

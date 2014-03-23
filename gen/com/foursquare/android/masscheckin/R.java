@@ -247,9 +247,9 @@ containing a value of this type.
         public static final int btnCreateGroup=0x7f05000e;
         public static final int btnCreateNewGroup=0x7f050007;
         public static final int btnDeleteDB=0x7f05000b;
-        public static final int btnDeleteGroups=0x7f050009;
         public static final int btnEditGroups=0x7f05000c;
         public static final int btnLogin=0x7f050016;
+        public static final int btnSelectActiveGroup=0x7f050009;
         public static final int checkTagFriendForGroup=0x7f050026;
         public static final int checkTagGroupDeletion=0x7f050029;
         public static final int container_layout_checkin=0x7f05001d;

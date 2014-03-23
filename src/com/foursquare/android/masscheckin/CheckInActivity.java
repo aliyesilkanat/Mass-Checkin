@@ -20,13 +20,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.foursquare.android.masscheckin.asynctasks.LoadVenues;
 import com.foursquare.android.masscheckin.asynctasks.MakeCheckIn;
 import com.foursquare.android.masscheckin.classes.CustomLocation;
+import com.foursquare.android.masscheckin.classes.SQLiteGroups;
 import com.foursquare.android.masscheckin.classes.Venue;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
@@ -52,17 +56,43 @@ public class CheckInActivity extends FragmentActivity {
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	private TypedArray navMenuIcons;
+	private Switch groupSwitch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.check_in);
-		context=this.getApplicationContext();
+		context = this.getApplicationContext();
 		setNavDrawer();
 		Log.i("override", "onCreate");
 		SharedPreferences sharedPref = getSharedPreferences(
 				"massCheckInTokenFile", MODE_PRIVATE);
 		prefsEditor = sharedPref.edit();
+		SharedPreferences sharedPrefGroup = getSharedPreferences(
+				"massCheckInActiveGroup", MODE_PRIVATE);
+		groupSwitch = (Switch) findViewById(R.id.switchGroupCheckIn);
+		final SharedPreferences.Editor sharedPrefGroupEditor = sharedPrefGroup
+				.edit();
+		groupSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				Venue.groupCheckInMode = isChecked;
+				sharedPrefGroupEditor.putBoolean("groupCheckInMode", isChecked);
+			}
+		});
+
+		int fileGroupId = sharedPrefGroup.getInt("groupID", 0);
+		if (fileGroupId != 0) {
+			SQLiteGroups sqlGroup = new SQLiteGroups(getApplicationContext());
+			Venue.activeGroup = sqlGroup.getGroup(fileGroupId);
+			boolean group = sharedPrefGroup.getBoolean("groupCheckInMode",
+					false);
+			groupSwitch.setChecked(group);
+			Venue.groupCheckInMode = group;
+		}
+
 		if (savedInstanceState != null) {
 			Venue.ACCESS_TOKEN = sharedPref.getString("accessToken", "");
 			Log.i("override", "ACCESS_TOKEN=" + Venue.ACCESS_TOKEN);
@@ -133,14 +163,15 @@ public class CheckInActivity extends FragmentActivity {
 					Intent in = new Intent(
 							getApplicationContext(),
 							com.foursquare.android.masscheckin.ArrangeGroups.class);
-					in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
 					navDrawerLayout.closeDrawers();
+					in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(in);
 				default:
 					break;
 				}
 			}
 		});
+
 	}
 
 	@Override
@@ -219,6 +250,17 @@ public class CheckInActivity extends FragmentActivity {
 		ui.setZoomControlsEnabled(false);
 		myMap.setMyLocationEnabled(true);
 
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (Venue.activeGroup != null) {
+			Switch switchGroup = (Switch) findViewById(R.id.switchGroupCheckIn);
+			switchGroup.setChecked(Venue.groupCheckInMode);
+			switchGroup.setText(Venue.activeGroup.name);
+		}
 	}
 
 	@Override

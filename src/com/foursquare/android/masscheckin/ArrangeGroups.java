@@ -1,12 +1,11 @@
 package com.foursquare.android.masscheckin;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -19,11 +18,16 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
-import com.foursquare.android.masscheckin.classes.CustomGroupsListAadapter;
+import com.foursquare.android.masscheckin.classes.CustomGroupsListAdapter;
 import com.foursquare.android.masscheckin.classes.Group;
 import com.foursquare.android.masscheckin.classes.SQLiteGroups;
+import com.foursquare.android.masscheckin.classes.Venue;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerItem;
 import com.foursquare.android.masscheckin.navdrawer.NavDrawerListAdapter;
 
@@ -39,37 +43,55 @@ public class ArrangeGroups extends Activity {
 
 	private ListView lvGroups;
 	public static List<Group> groupList = new ArrayList();
-	private Button deleteGroups;
+	private Button btnSelectGroup;
 	public static Activity act;
+	private SharedPreferences sharedPref;
+	private SharedPreferences.Editor prefsEditor;
+	private Switch groupSwitch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_arrange_groups);
+		sharedPref = getSharedPreferences("massCheckInActiveGroup",
+				MODE_PRIVATE);
+		prefsEditor = sharedPref.edit();
+		groupSwitch = (Switch) findViewById(R.id.switchGroupCheckIn);
+		groupSwitch
+		.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(
+					CompoundButton buttonView, boolean isChecked) {
+				prefsEditor.putBoolean("groupCheckInMode",
+						isChecked);
+				prefsEditor.commit();
+				Venue.groupCheckInMode = isChecked;
+			}
+		});
 		setNavDrawer();
 		act = this;
 		lvGroups = (ListView) findViewById(R.id.lvGroups);
-		deleteGroups = (Button) findViewById(R.id.btnDeleteGroups);
-		deleteGroups.setEnabled(false);
-		deleteGroups.setOnClickListener(new OnClickListener() {
-
+		btnSelectGroup = (Button) findViewById(R.id.btnSelectActiveGroup);
+		btnSelectGroup.setEnabled(false);
+		if(Venue.activeGroup!=null)
+		{
+			groupSwitch.setText(Venue.activeGroup.name);
+			groupSwitch.setChecked(Venue.groupCheckInMode);
+		}
+		btnSelectGroup.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SQLiteGroups sql = new SQLiteGroups(act);
-				Queue<Group> deletionQueue = new LinkedList<Group>();
-				for (Group g : groupList) {
-					if (g.isSelectedToDeletion) {
-						sql.deleteGroup(g);
-						deletionQueue.add(g);
-					}
-				}
-				while (deletionQueue.size() != 0) {
-					groupList.remove(deletionQueue.poll());
-				}
-				CustomGroupsListAadapter adap = new CustomGroupsListAadapter(
-						act, groupList);
-				lvGroups.setAdapter(adap);
-				deleteGroups.setEnabled(false);
+				Venue.activeGroup = groupList
+						.get(CustomGroupsListAdapter.previousCheck);
+				Toast.makeText(getApplicationContext(),
+						Venue.activeGroup.name + " selected as active group",
+						Toast.LENGTH_SHORT).show();
+				btnSelectGroup.setEnabled(false);
+
+				prefsEditor.putInt("groupID", Venue.activeGroup.id);
+				prefsEditor.commit();
+				groupSwitch.setText(Venue.activeGroup.name);
+			
 			}
 		});
 		findViewById(R.id.btnCreateNewGroup).setOnClickListener(
@@ -77,7 +99,7 @@ public class ArrangeGroups extends Activity {
 
 					@Override
 					public void onClick(View v) {
-						CreateGroup.ACTION_MODE=CreateGroup.CONSTANT_CREATE_GROUP;
+						CreateGroup.ACTION_MODE = CreateGroup.CONSTANT_CREATE_GROUP;
 						Intent intent = new Intent(
 								getApplicationContext(),
 								com.foursquare.android.masscheckin.CreateGroup.class);
@@ -97,17 +119,18 @@ public class ArrangeGroups extends Activity {
 						lvGroups.setAdapter(null);
 					}
 				});
-		
-		findViewById(R.id.btnEditGroups).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(act,EditGroups.class);
-				navDrawerLayout.closeDrawers();
-				startActivity(intent);
-				
-			}
-		});
+
+		findViewById(R.id.btnEditGroups).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(act, EditGroups.class);
+						navDrawerLayout.closeDrawers();
+						startActivity(intent);
+						
+					}
+				});
 	}
 
 	private void loadGroups() {
@@ -117,7 +140,7 @@ public class ArrangeGroups extends Activity {
 		for (Group g : sql.getAllGroups()) {
 			groupList.add(g);
 		}
-		CustomGroupsListAadapter adap = new CustomGroupsListAadapter(this,
+		CustomGroupsListAdapter adap = new CustomGroupsListAdapter(this,
 				groupList);
 		lvGroups.setAdapter(adap);
 		adap.notifyDataSetChanged();
@@ -126,7 +149,7 @@ public class ArrangeGroups extends Activity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-//		android.os.Process.killProcess(android.os.Process.myPid());
+		// android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	@Override
@@ -191,8 +214,8 @@ public class ArrangeGroups extends Activity {
 					Intent intent = new Intent(
 							getApplicationContext(),
 							com.foursquare.android.masscheckin.CheckInActivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					navDrawerLayout.closeDrawers();
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
 					break;
 				case 1:
@@ -202,7 +225,6 @@ public class ArrangeGroups extends Activity {
 					break;
 				}
 			}
-
 		});
 	}
 

@@ -48,9 +48,9 @@
         <item>@drawable/ic_action_group</item>
     </array>
 
-    <string name="title_activity_arrange_groups">ArrangeGroups</string>
-    <string name="title_activity_create_group">CreateGroup</string>
-    <string name="title_activity_edit_groups">EditGroups</string>
+    <string name="title_activity_arrange_groups">Arrange Groups</string>
+    <string name="title_activity_create_group">Create Group</string>
+    <string name="title_activity_edit_groups">Edit Groups</string>
 
 </resources> <!-- Content Description -->
 <!-- <string name="desc_list_item_icon">Item Icon</string> -->

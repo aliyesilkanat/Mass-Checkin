@@ -32,7 +32,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.foursquare.android.masscheckin.R;
 import com.foursquare.android.masscheckin.classes.ExampleTokenStore;
 import com.foursquare.android.masscheckin.classes.Venue;
 import com.foursquare.android.nativeoauth.FoursquareCancelException;

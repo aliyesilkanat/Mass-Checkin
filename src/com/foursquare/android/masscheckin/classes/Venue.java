@@ -18,4 +18,6 @@ public class Venue {
 	public String category;
 	public String distance;
 	public static String ACCESS_TOKEN;
+	public static Group activeGroup;
+	public static boolean groupCheckInMode=false;
 }

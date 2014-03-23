@@ -13,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.foursquare.android.masscheckin.CreateGroup;
 import com.foursquare.android.masscheckin.R;
 
 public class CustomFriendsListAdapter extends BaseAdapter {

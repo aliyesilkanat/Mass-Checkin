@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/btnCreateNewGroup"
-            android:layout_below="@+id/btnDeleteGroups"
+            android:layout_below="@+id/btnSelectActiveGroup"
             android:paddingBottom="3dp"
             android:paddingTop="5dp"
             android:text="Groups" />
@@ -47,13 +47,13 @@
             android:scrollingCache="true" />
 
         <Button
-            android:id="@+id/btnDeleteGroups"
+            android:id="@+id/btnSelectActiveGroup"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/btnCreateNewGroup"
             android:layout_below="@+id/btnCreateNewGroup"
-            android:text="Delete Selected Groups" />
+            android:text="Select Active Group" />
 
         <Button
             android:id="@+id/btnDeleteDB"

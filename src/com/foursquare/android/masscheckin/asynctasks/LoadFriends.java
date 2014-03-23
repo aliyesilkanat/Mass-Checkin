@@ -110,7 +110,7 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 	}
 
 	@Override
-	protected void onPostExecute(Activity result) {
+	protected void onPostExecute(final Activity result) {
 		Collections.sort(listFriends);
 		CustomFriendsListAdapter adap = new CustomFriendsListAdapter(
 				result.getApplicationContext(), listFriends);
@@ -125,6 +125,18 @@ public class LoadFriends extends AsyncTask<Object, View, Activity> {
 				if (((EditText) CreateGroup.currentAct
 						.findViewById(R.id.txtGroupName)).getText().length() > 0)
 					btnCreateGroup.setEnabled(true);
+				if (CreateGroup.ACTION_MODE == CreateGroup.CONSTANT_EDIT_GROUP) {
+					for (Friends friend : listFriends) {
+						for (Friends f : CreateGroup.editingGroup.friendList) {
+							if (friend.id.equals(f.id))
+								friend.isSelected = true;
+						}
+					}
+					((EditText)result.findViewById(R.id.txtGroupName)).setText(CreateGroup.editingGroup.name);
+					CustomFriendsListAdapter adapter = new CustomFriendsListAdapter(result, listFriends);
+					((ListView)result.findViewById(R.id.lvFriends)).setAdapter(adapter);
+				}
+
 			}
 		});
 		super.onPostExecute(result);

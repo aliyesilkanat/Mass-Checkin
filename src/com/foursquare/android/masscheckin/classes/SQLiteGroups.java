@@ -3,9 +3,6 @@ package com.foursquare.android.masscheckin.classes;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.foursquare.android.masscheckin.CheckInActivity;
-import com.google.android.gms.drive.internal.f;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -170,12 +167,15 @@ public class SQLiteGroups extends SQLiteOpenHelper {
 		Log.d("updateGroup", strFriends);
 		values.put(KEY_FRIENDS, strFriends);
 		// 3. updating row
+		if (!db.isOpen())
+			db = getWritableDatabase();
 		int i = db.update(TABLE_GROUPS, // table
 				values, // column/value
 				KEY_ID + " = ?", // selections
 				new String[] { String.valueOf(group.id) }); // selection args
 
 		// 4. close
+
 		db.close();
 
 		return i;

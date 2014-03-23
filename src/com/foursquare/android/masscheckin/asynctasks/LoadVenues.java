@@ -15,14 +15,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.foursquare.android.masscheckin.MainActivity;
-import com.foursquare.android.masscheckin.R;
-import com.foursquare.android.masscheckin.R.color;
-import com.foursquare.android.masscheckin.R.id;
-import com.foursquare.android.masscheckin.R.string;
-import com.foursquare.android.masscheckin.classes.DateSingleton;
-import com.foursquare.android.masscheckin.classes.Venue;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +29,11 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.foursquare.android.masscheckin.MainActivity;
+import com.foursquare.android.masscheckin.R;
+import com.foursquare.android.masscheckin.classes.DateSingleton;
+import com.foursquare.android.masscheckin.classes.Venue;
 
 /**
  * @author smsng

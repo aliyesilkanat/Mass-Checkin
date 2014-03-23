@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.drm.DrmStore.Action;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,18 +52,12 @@ public class CreateGroup extends Activity {
 		}
 		btnCreateGroup = (Button) findViewById(R.id.btnCreateGroup);
 		txtGroupName = (EditText) findViewById(R.id.txtGroupName);
-		if (ACTION_MODE == CONSTANT_EDIT_GROUP) {
-			for (Friends friend : listFriends) {
-				for (Friends f : editingGroup.friendList) {
-					if (friend.id.equals(f.id))
-						friend.isSelected = true;
-				}
-			}
-			txtGroupName.setText(editingGroup.name);
-			CustomFriendsListAdapter adapter = new CustomFriendsListAdapter(this, listFriends);
-			((ListView)findViewById(R.id.lvFriends)).setAdapter(adapter);
+		if (ACTION_MODE == CONSTANT_CREATE_GROUP)
+			btnCreateGroup.setText("Create group");
+		else if (ACTION_MODE == CONSTANT_EDIT_GROUP) {
+			btnCreateGroup.setText("Update group");
+			getActionBar().setTitle("Update group");
 		}
-
 		txtGroupName.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -111,12 +106,27 @@ public class CreateGroup extends Activity {
 							taggedFriendList.add(friend);
 						}
 					}
-					Group group = new Group();
-					group.friendList = taggedFriendList;
-					group.name = ((EditText) findViewById(R.id.txtGroupName))
-							.getText().toString();
-					group.id = sqlGroups.addGroup(group);
-					ArrangeGroups.groupList.add(group);
+					if (ACTION_MODE == CONSTANT_CREATE_GROUP) {
+						Group group = new Group();
+						group.friendList = taggedFriendList;
+						group.name = ((EditText) findViewById(R.id.txtGroupName))
+								.getText().toString();
+
+						group.id = sqlGroups.addGroup(group);
+						ArrangeGroups.groupList.add(group);
+					} else if (ACTION_MODE == CONSTANT_EDIT_GROUP) {
+						editingGroup.friendList = taggedFriendList;
+						editingGroup.name = ((EditText) findViewById(R.id.txtGroupName))
+								.getText().toString();
+						sqlGroups.updateGroup(editingGroup);
+					}
+					String mode = ACTION_MODE == CONSTANT_CREATE_GROUP ? "created"
+							: "updated";
+					Toast.makeText(
+							getApplicationContext(),
+							((EditText) findViewById(R.id.txtGroupName))
+									.getText().toString() + mode,
+							Toast.LENGTH_SHORT).show();
 					finish();
 				}
 			}

@@ -77,9 +77,9 @@ int id action_settings 0x7f05002e
 int id btnCreateGroup 0x7f05000e
 int id btnCreateNewGroup 0x7f050007
 int id btnDeleteDB 0x7f05000b
-int id btnDeleteGroups 0x7f050009
 int id btnEditGroups 0x7f05000c
 int id btnLogin 0x7f050016
+int id btnSelectActiveGroup 0x7f050009
 int id checkTagFriendForGroup 0x7f050026
 int id checkTagGroupDeletion 0x7f050029
 int id container_layout_checkin 0x7f05001d

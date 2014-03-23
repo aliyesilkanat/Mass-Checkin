@@ -13,16 +13,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.foursquare.android.masscheckin.R;
-import com.foursquare.android.masscheckin.R.id;
-import com.foursquare.android.masscheckin.classes.Venue;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.foursquare.android.masscheckin.R;
+import com.foursquare.android.masscheckin.classes.Venue;
 
 public class MakeCheckIn extends AsyncTask<Object, View, Activity> {
 	List<Venue> venueList;
