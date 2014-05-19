@@ -12,7 +12,6 @@ public class Friends implements Comparable<Friends> {
 	public boolean hasPhoto;
 	public boolean isSelected;
 	public String id;
-	
 	public String getSmallPhoto() {
 		if (hasPhoto)
 			return photoPrefix + "128x128" + photoSuffix;
